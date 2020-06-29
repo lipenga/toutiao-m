@@ -2,3 +2,4 @@
 2，git remote add origin git@github.com:lipenga/toutiao-m.git //添加一个远程仓库
 3. git push --set-upstream origin master:master // 简写如下
 3. git push -u origin master:master
+4.安装vant postcss-pxtorem lib-flexible(设置rem基准值 根目录创建。postcssrc.js 复制粘贴)
