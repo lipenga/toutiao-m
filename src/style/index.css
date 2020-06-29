@@ -1,2 +1,6 @@
 /* 字体图标 */
-@import 'font.css'
+@import 'font.css';
+
+body {
+    background-color: #f5f7f9;
+}

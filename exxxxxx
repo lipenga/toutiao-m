@@ -3,3 +3,6 @@
 3. git push --set-upstream origin master:master // 简写如下
 3. git push -u origin master:master
 4.安装vant postcss-pxtorem lib-flexible(设置rem基准值 根目录创建。postcssrc.js 复制粘贴)
+5.搭建首页组件.描绘页面.
+二.登陆
+6.点击登陆,发起表单验证,验证通过,跳转操作,不通过,回弹并提示.
