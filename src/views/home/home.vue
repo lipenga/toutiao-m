@@ -1,11 +1,14 @@
 <template>
   <div>
+    <!-- 未登陆头部 -->
     <div class="heard">
       <div class="loginhead" @click="$router.push('/login')">
         <img class="phone_img" src="~@/assets/mobile.png" />
         <span id="text">登陆/注册</span>
       </div>
     </div>
+
+    <!-- 已经登陆头部 -->
     <div>
       <div class="baseinfo">
         <div>
@@ -31,9 +34,12 @@
         </div>
         <div>
           <span>10</span>
-          <span>头条</span>
+          <span>货站</span>
         </div>
       </div>
+    </div>
+    <!-- 公共部分 -->
+    <div>
       <van-grid clickable :column-num="2">
         <van-grid-item>
           <i slot="icon" class="iconfont icon-mark"></i>
@@ -46,8 +52,8 @@
       </van-grid>
       <van-cell title="消息通知" class="mestitle" is-link />
       <van-cell title="小智同学" is-link />
-      <van-cell title="退出登陆" is-link class="logout-cell" />
     </div>
+    <van-cell title="退出登陆" is-link class="logout-cell" />
   </div>
 </template>
 <script>
