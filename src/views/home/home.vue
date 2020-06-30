@@ -1,15 +1,7 @@
 <template>
   <div>
-    <!-- 未登陆头部 -->
-    <div class="heard">
-      <div class="loginhead" @click="$router.push('/login')">
-        <img class="phone_img" src="~@/assets/mobile.png" />
-        <span id="text">登陆/注册</span>
-      </div>
-    </div>
-
     <!-- 已经登陆头部 -->
-    <div>
+    <div v-if="user">
       <div class="baseinfo">
         <div>
           <img id="avatar" src="~@/assets/2.jpg" />
@@ -38,6 +30,14 @@
         </div>
       </div>
     </div>
+    <!-- 未登陆头部 -->
+    <div class="heard" v-else>
+      <div class="loginhead" @click="$router.push('/')">
+        <img class="phone_img" src="~@/assets/mobile.png" />
+        <span id="text">登陆/注册</span>
+      </div>
+    </div>
+
     <!-- 公共部分 -->
     <div>
       <van-grid clickable :column-num="2">
@@ -53,7 +53,13 @@
       <van-cell title="消息通知" class="mestitle" is-link />
       <van-cell title="小智同学" is-link />
     </div>
-    <van-cell title="退出登陆" is-link class="logout-cell" />
+    <van-cell
+      v-if="user"
+      title="退出登陆"
+      is-link
+      class="logout-cell"
+      @click="logout"
+    />
   </div>
 </template>
 <script>
@@ -62,6 +68,12 @@ export default {
   name: 'myindex',
   data() {
     return {}
+  },
+  methods: {
+    logout() {
+      window.localStorage.removeItem('token')
+      this.$router.push('/')
+    }
   },
   computed: {
     ...mapState(['user'])

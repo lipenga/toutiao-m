@@ -103,6 +103,7 @@ export default {
 
         // window.sessionStorage.setItem('tokenx', JSON.stringify(data.data))
         this.$router.push('/layout')
+        // this.$router.back()
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail('手机号或者验证码错误')
