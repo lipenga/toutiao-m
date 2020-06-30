@@ -5,17 +5,34 @@ Vue.use(VueRouter)
 // 路由表
 const routes = [
   {
-    path: '/login',
-    component: () => import('@/views/login')
-  },
-  {
     path: '/',
     component: () => import('@/views/login')
   },
   {
-    name: 'layout',
     path: '/layout',
-    component: () => import('@/views/layout/index')
+    component: () => import('@/views/home/home.vue'),
+    children: [
+      {
+        path: '',
+
+        component: () => import('@/views/home/home.vue')
+      },
+      {
+        path: '/qa',
+        name: 'qa',
+        component: () => import('@/views/qa/qa.vue')
+      },
+      {
+        path: '/video',
+        name: 'video',
+        component: () => import('@/views/video/video.vue')
+      },
+      {
+        path: '/my',
+        name: 'my',
+        component: () => import('@/views/my/my.vue')
+      }
+    ]
   }
 ]
 

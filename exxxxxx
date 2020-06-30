@@ -5,4 +5,8 @@
 4.安装vant postcss-pxtorem lib-flexible(设置rem基准值 根目录创建。postcssrc.js 复制粘贴)
 5.搭建首页组件.描绘页面.
 二.登陆
-6.点击登陆,发起表单验证,验证通过,跳转操作,不通过,回弹并提示.
+6.登陆成功。处理token,使用vuex,this.$store.commit('setUser', data.data),通过调用setUser，将token传到state: // window.localStorage.setItem('token', JSON.stringify(state.user))
+7. state: { user: JSON.parse(window.localStorage.getItem('token')) },
+8。封装本地储存模板，优化tuoken设置。setUser里设置token  setItem('token', JSON.stringify(state.user))。 state: { user: getItem('token') },
+9.绘制layout公用模板。加路由出口，配置四个底部导航组件，并跳转。
+10.绘制home页，顶部未登陆状态，点击回退到登录页。绘制顶部登陆状态。

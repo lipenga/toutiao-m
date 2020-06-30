@@ -1,6 +1,13 @@
 <template>
-  <div class="login-container" id="app">
-    <van-nav-bar title="登陆" />
+  <div class="login-container">
+    <van-nav-bar title="登陆">
+      <van-icon
+        name="arrow-left"
+        id="back"
+        slot="left"
+        @click="$router.back()"
+      ></van-icon>
+    </van-nav-bar>
     <van-form @submit="onSubmit" ref="loginForm">
       <!-- 手机号 -->
       <van-field
@@ -95,7 +102,7 @@ export default {
         this.$store.commit('setUser', data.data)
 
         // window.sessionStorage.setItem('tokenx', JSON.stringify(data.data))
-        // this.$router.push('/layout')
+        this.$router.push('/layout')
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail('手机号或者验证码错误')
@@ -135,9 +142,9 @@ export default {
 .van-nav-bar__title {
   font: #fff;
 }
-.iconfont {
+/* .iconfont {
   font-size: 37px;
-}
+} */
 .send_sms_btn {
   background-color: darkgray;
   width: 152px;
@@ -151,5 +158,8 @@ export default {
 .loginBtn {
   background-color: #6db4fb;
   border: none;
+}
+#back {
+  color: #fff;
 }
 </style>

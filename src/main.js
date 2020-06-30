@@ -1,6 +1,6 @@
 import Vue from 'vue'
-// import App from './App.vue'
-import Login from './views/login/index.vue'
+import App from './App.vue'
+
 import router from './router'
 import store from './store/index'
 // 引入vant组件
@@ -31,5 +31,5 @@ Vue.config.productionTip = false
 new Vue({
   store,
   router,
-  render: h => h(Login)
+  render: h => h(App)
 }).$mount('#app')
