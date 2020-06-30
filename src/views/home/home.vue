@@ -4,29 +4,29 @@
     <div v-if="user">
       <div class="baseinfo">
         <div>
-          <img id="avatar" src="~@/assets/2.jpg" />
+          <img id="avatar" :src="this.userinfo.photo" />
         </div>
         <div>
-          <span class="username">黑马头条号</span>
+          <span class="username">{{ this.userinfo.name }}</span>
         </div>
         <div id="editdiv">编辑资料</div>
       </div>
       <div class="data-list">
         <div>
-          <span>10</span>
+          <span>{{ this.userinfo.art_count }}</span>
           <span>头条</span>
         </div>
         <div>
-          <span>11</span>
-          <span>头条</span>
+          <span>{{ this.userinfo.follow_count }}</span>
+          <span>关注</span>
         </div>
         <div>
-          <span>10</span>
-          <span>头条</span>
+          <span>{{ this.userinfo.fans_count }}</span>
+          <span>粉丝</span>
         </div>
         <div>
-          <span>10</span>
-          <span>货站</span>
+          <span>{{ this.userinfo.like_count }}</span>
+          <span>获赞</span>
         </div>
       </div>
     </div>
@@ -64,15 +64,39 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import { getUserInfo } from '@/api/user.js'
 export default {
   name: 'myindex',
   data() {
-    return {}
+    return {
+      userinfo: {}
+    }
+  },
+  created() {
+    if (this.user) {
+      this.loadUserInfo()
+    }
   },
   methods: {
     logout() {
-      window.localStorage.removeItem('token')
-      this.$router.push('/')
+      this.$dialog
+        .confirm({ title: '确定退出登陆吗？' })
+        .then(() => {
+          this.$store.commit('setUser', null)
+          // window.localStorage.removeItem('token')
+          // this.$router.push('/')
+        })
+        .catch(() => {
+          console.log('取消退出登陆')
+        })
+    },
+    async loadUserInfo() {
+      try {
+        const res = await getUserInfo()
+        this.userinfo = res.data.data
+      } catch (err) {
+        this.$toast('获取数据失败，请稍后重试')
+      }
     }
   },
   computed: {
@@ -111,6 +135,7 @@ export default {
   display: flex;
   /* justify-content: center; */
   align-items: center;
+  background-image: url('~@/assets/banner.png');
 }
 #avatar {
   width: 132px;

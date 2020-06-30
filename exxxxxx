@@ -9,4 +9,18 @@
 7. state: { user: JSON.parse(window.localStorage.getItem('token')) },
 8。封装本地储存模板，优化tuoken设置。setUser里设置token  setItem('token', JSON.stringify(state.user))。 state: { user: getItem('token') },
 9.绘制layout公用模板。加路由出口，配置四个底部导航组件，并跳转。
-10.绘制home页，顶部未登陆状态，点击回退到登录页。绘制顶部登陆状态。
+10.绘制home页，顶部未登陆状态，点击回退到登录页。绘制顶部登陆状态。未登录状态，和公共部分。通过v-if和token是否存在控制登陆和未登陆部分的显示隐藏。
+11.点击退出。清空token: this.$store.commit('setUser', null)
+12.获取用户信息。发请求需要添加请求头。再设置请求拦截器request.interceptors.request.use(
+  function(config) {
+    const { user } = store.state
+    if (user && user.token) {
+      config.headers.Authorization = `Bearer ${user.token}`
+    }
+    return config
+  },
+  function(error) {
+    return Promise.reject(error)
+  }
+)
+13.
