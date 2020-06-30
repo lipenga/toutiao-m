@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" id="app">
     <van-nav-bar title="登陆" />
     <van-form @submit="onSubmit" ref="loginForm">
       <!-- 手机号 -->
@@ -89,9 +89,13 @@ export default {
       })
       const user = this.user
       try {
-        const res = await login(user)
-        console.log('登陆成功', res)
+        const { data } = await login(user)
         this.$toast.success('登陆成功')
+        // 处理token
+        this.$store.commit('setUser', data.data)
+
+        // window.sessionStorage.setItem('tokenx', JSON.stringify(data.data))
+        // this.$router.push('/layout')
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail('手机号或者验证码错误')
