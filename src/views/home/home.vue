@@ -1,12 +1,12 @@
 <template>
   <div>
-    <div class="heard" v-if="!user">
+    <div class="heard">
       <div class="loginhead" @click="$router.push('/login')">
         <img class="phone_img" src="~@/assets/mobile.png" />
         <span id="text">登陆/注册</span>
       </div>
     </div>
-    <div v-else>
+    <div>
       <div class="baseinfo">
         <div>
           <img id="avatar" src="~@/assets/2.jpg" />
@@ -44,6 +44,9 @@
           <span slot="text">历史</span>
         </van-grid-item>
       </van-grid>
+      <van-cell title="消息通知" class="mestitle" is-link />
+      <van-cell title="小智同学" is-link />
+      <van-cell title="退出登陆" is-link class="logout-cell" />
     </div>
   </div>
 </template>
@@ -138,5 +141,13 @@ export default {
 .icon-search {
   color: #3b98fe;
   font-size: 80px;
+}
+.logout-cell {
+  text-align: center;
+  margin-top: 5px;
+  color: red;
+}
+.mestitle {
+  margin-top: 5px;
 }
 </style>

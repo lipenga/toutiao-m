@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-view />
-    <van-tabbar v-model="active" route>
+    <van-tabbar route>
       <van-tabbar-item to="/">
         <i slot="icon" class="iconfont icon-icon--"></i
         ><span>首页</span></van-tabbar-item
