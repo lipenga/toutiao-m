@@ -2,7 +2,7 @@
   <div>
     <router-view />
     <van-tabbar route>
-      <van-tabbar-item to="/">
+      <van-tabbar-item to="/home">
         <i slot="icon" class="iconfont icon-home"></i
         ><span>首页</span></van-tabbar-item
       >
@@ -14,7 +14,7 @@
         ><i slot="icon" class="iconfont icon-video"></i
         ><span>视频</span></van-tabbar-item
       >
-      <van-tabbar-item to="/my"
+      <van-tabbar-item to="/layout"
         ><i slot="icon" class="iconfont icon-nickname"></i
         ><span>{{
           $store.state.user ? '我的' : '未登录'

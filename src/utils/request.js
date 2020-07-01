@@ -10,6 +10,7 @@ const request = axios.create({
 //   config.headers.Authorization = window.sessionStorage.getItem('tokenx')
 //   return config
 // })
+// 请求拦截器
 request.interceptors.request.use(
   function(config) {
     const { user } = store.state

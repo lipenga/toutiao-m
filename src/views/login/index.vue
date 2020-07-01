@@ -100,9 +100,9 @@ export default {
         this.$toast.success('登陆成功')
         // 处理token
         this.$store.commit('setUser', data.data)
-
-        // window.sessionStorage.setItem('tokenx', JSON.stringify(data.data))
         this.$router.push('/layout')
+        // window.sessionStorage.setItem('tokenx', JSON.stringify(data.data))
+
         // this.$router.back()
       } catch (err) {
         if (err.response.status === 400) {
