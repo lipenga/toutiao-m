@@ -18,9 +18,12 @@
     </div>
     <!-- 频道列表 -->
     <van-tabs class="tabs" v-model="active" animated swipeable>
-      <van-tab :title="item.name" v-for="item in channels" :key="item.id"
-        >{{ item.name }}的内容</van-tab
-      >
+      <van-tab
+        :title="channel.name"
+        v-for="channel in channel"
+        :key="channel.id"
+        ><Articlelist :channel="channel"></Articlelist
+      ></van-tab>
 
       <div slot="nav-right" class="placeholder"></div>
       <div slot="nav-right" class="hbgbtn">
@@ -32,14 +35,17 @@
 </template>
 <script>
 import { getuserlist } from '@/api/user'
+import Articlelist from './components/Articlelist'
 export default {
   name: 'homeindex',
+  components: { Articlelist },
   data() {
     return {
       active: 0,
-      channels: []
+      channel: []
     }
   },
+
   created() {
     this.loaduserlist()
   },
@@ -49,8 +55,8 @@ export default {
       try {
         const res = await getuserlist()
 
-        this.channels = res.data.data.channels
-        console.log(this.channels)
+        this.channel = res.data.data.channels
+        // console.log(this.channel)
       } catch (err) {
         this.$toast.fail('获取错误')
       }
@@ -65,6 +71,7 @@ export default {
   flex-shrink: 0;
 }
 .home-container {
+  padding-bottom: 100px;
   .van-icon {
     font-size: 37px;
     color: #fff;
