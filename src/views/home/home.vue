@@ -2,7 +2,7 @@
   <div class="home-container">
     <!-- 首页导航栏 -->
     <div>
-      <van-nav-bar class="page-nav-bar">
+      <van-nav-bar class="page-nav-bar" fixed>
         <van-button
           class="search-btn"
           slot="title"
@@ -72,6 +72,8 @@ export default {
 }
 .home-container {
   padding-bottom: 100px;
+  padding-top: 174px;
+
   .van-icon {
     font-size: 37px;
     color: #fff;
@@ -93,6 +95,11 @@ export default {
 /deep/ .tabs {
   .van-tabs__wrap {
     height: 82px;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    right: 0;
+    top: 90px;
   }
   .van-tab {
     min-width: 200px;
@@ -114,7 +121,7 @@ export default {
   width: 66px;
   height: 82px;
   right: 0;
-  // top: 100px;
+
   display: flex;
   justify-content: center;
   align-items: center;

@@ -23,4 +23,7 @@
     return Promise.reject(error)
   }
 )
-13.
+13.渲染用户信息到已登陆页
+14.绘制频道标签。获取频道信息，发请求并渲染。内容部分采用组件加载。配合循环:新建内容组件。在home页导入。并注册，在循环中使用，在新建的组件中prop接收动态循环项。
+15.绘制list页面。用list组件。该组件有load方法loading须理解才能好的运用。
+16.下拉刷新数据。采用van-pull-refresh组件.用fixed固定搜索框，标签页。再用padding-top固定列表视图
