@@ -25,11 +25,18 @@ export const getUserInfo = () => {
     // }
   })
 }
-// 获取用户频道列表
+// 获取用户频道列表-
 export const getuserlist = function(data) {
   return request({
     method: 'get',
     url: '/app/v1_0/user/channels'
+  })
+}
+// - 获取全部用户频道列表
+export const getalllist = function(data) {
+  return request({
+    method: 'get',
+    url: '/app/v1_0/channels'
   })
 }
 // 获取文章列表

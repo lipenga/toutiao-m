@@ -27,22 +27,36 @@
 
       <div slot="nav-right" class="placeholder"></div>
       <div slot="nav-right" class="hbgbtn">
-        <i class="iconfont icon-menu"></i>
+        <i class="iconfont icon-menu" @click="showPopup"></i>
         <!-- <van-icon name="bars"></van-icon> -->
       </div>
     </van-tabs>
+    <!-- 弹出层 -->
+    <van-popup
+      closeable
+      v-model="show"
+      position="top"
+      :style="{ height: '85%' }"
+      close-icon-position="top-left"
+    >
+      <!-- 弹出层我的内容列表插槽 -->
+      <channeledit :mychannels="channel" :active="active"></channeledit>
+    </van-popup>
   </div>
 </template>
 <script>
 import { getuserlist } from '@/api/user'
 import Articlelist from './components/Articlelist'
+import channeledit from './components/channel-edit'
 export default {
   name: 'homeindex',
-  components: { Articlelist },
+  components: { Articlelist, channeledit },
   data() {
     return {
       active: 0,
-      channel: []
+      // 频道列表
+      channel: [],
+      show: false
     }
   },
 
@@ -60,6 +74,9 @@ export default {
       } catch (err) {
         this.$toast.fail('获取错误')
       }
+    },
+    showPopup() {
+      this.show = true
     }
   }
 }
