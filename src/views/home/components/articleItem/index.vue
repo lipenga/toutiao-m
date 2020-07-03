@@ -15,7 +15,7 @@
       </div>
       <div class="label-info-wrap">
         <span>{{ article.aut_name }}</span>
-        <span>{{ article.comm_count }}磊哥晚上点外卖评论</span>
+        <span>{{ article.comm_count }}</span>
         <span>{{ article.pubdate | relativeTime }}</span>
       </div>
     </div>

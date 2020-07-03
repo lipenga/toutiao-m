@@ -107,7 +107,12 @@ export default {
         // 编辑状态,点击标签删除。
         // 登陆了的删除
         if (this.user) {
-          await delUserChannels(item.id)
+          try {
+            const res = await delUserChannels(item.id)
+            console.log(res)
+          } catch (err) {
+            this.$toast('删除失败', err)
+          }
         } else {
           // 未登陆的删除
           setItem('TOUTIAO_CHANNELS', this.mychannels)

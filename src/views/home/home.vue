@@ -52,6 +52,8 @@
 import { getuserlist } from '@/api/user'
 import Articlelist from './components/Articlelist'
 import channeledit from './components/channel-edit'
+import { mapState } from 'vuex'
+import { getItem } from '@/utils/storage.js'
 export default {
   name: 'homeindex',
   components: { Articlelist, channeledit },
@@ -70,11 +72,25 @@ export default {
   methods: {
     // 获取首页列表
     async loaduserlist() {
+      let channels = []
       try {
-        const res = await getuserlist()
-
-        this.channel = res.data.data.channels
-        // console.log(this.channel)
+        if (this.user) {
+          // 已登陆获取线上列表数据
+          const res = await getuserlist()
+          channels = res.data.data.channels
+        } else {
+          // 未登录 判断本地是否有频道列表数据
+          const location = getItem('TOUTIAO_CHANNELS')
+          // 如果有，拿来用
+          if (location) {
+            channels = location
+          } else {
+            // 没有，请求获取默认频道列表
+            const res = await getuserlist()
+            channels = res.data.data.channels
+          }
+        }
+        this.channel = channels
       } catch (err) {
         this.$toast.fail('获取错误')
       }
@@ -86,6 +102,9 @@ export default {
       this.active = index
       this.show = show
     }
+  },
+  computed: {
+    ...mapState(['user'])
   }
 }
 </script>
