@@ -84,7 +84,7 @@ export default {
     },
     onUpdataActive(index) {
       this.active = index
-      this.showPopup = false
+      this.show = false
     }
   }
 }
