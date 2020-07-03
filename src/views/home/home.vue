@@ -82,9 +82,9 @@ export default {
     showPopup() {
       this.show = true
     },
-    onUpdataActive(index) {
+    onUpdataActive(index, show = true) {
       this.active = index
-      this.show = false
+      this.show = show
     }
   }
 }

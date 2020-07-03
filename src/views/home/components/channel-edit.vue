@@ -4,16 +4,9 @@
     <van-cell-group>
       <van-cell class="my_tv_top">
         <span slot="title">我的频道</span>
-        <span
-          slot="default"
-          class="my_tv_top_edit"
-          @click="edit"
-          v-if="this.flag === false"
-          >编辑</span
-        >
-        <span slot="default" class="my_tv_top_edit" @click="edit" v-else
-          >完成</span
-        >
+        <span slot="default" class="my_tv_top_edit" @click="flag = !flag">{{
+          flag ? '完成' : '编辑'
+        }}</span>
       </van-cell>
     </van-cell-group>
     <!-- 我的频道内容 -->
@@ -74,10 +67,6 @@ export default {
     this.load()
   },
   methods: {
-    // 点击编辑标签
-    edit() {
-      this.flag = !this.flag
-    },
     //   获取全部标签
     async load() {
       try {
@@ -92,13 +81,23 @@ export default {
     addchannel(channel) {
       this.mychannels.push(channel)
     },
+    // 点击我的标签
     clickMyChannel(item, index) {
       console.log(item, index)
       if (this.flag) {
-        // 编辑状态
+        // 编辑状态,点击标签删除。
+        // 不能删除推荐标签
+        if (this.fiexchannels.includes(item.id)) {
+          return
+        }
+
+        if (index <= this.active) {
+          this.$emit('updataActive', this.active - 1, true)
+        }
+        this.mychannels.splice(index, 1)
       } else {
-        // 非编辑状态
-        this.$emit('updataActive', index)
+        // 非编辑状态，点击跳转
+        this.$emit('updataActive', index, false)
       }
     }
   },
