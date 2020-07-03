@@ -40,7 +40,11 @@
       close-icon-position="top-left"
     >
       <!-- 弹出层我的内容列表插槽 -->
-      <channeledit :mychannels="channel" :active="active"></channeledit>
+      <channeledit
+        :mychannels="channel"
+        :active="active"
+        @updataActive="onUpdataActive"
+      ></channeledit>
     </van-popup>
   </div>
 </template>
@@ -77,6 +81,10 @@ export default {
     },
     showPopup() {
       this.show = true
+    },
+    onUpdataActive(index) {
+      this.active = index
+      this.showPopup = false
     }
   }
 }

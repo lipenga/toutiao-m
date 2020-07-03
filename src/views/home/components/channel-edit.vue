@@ -24,6 +24,7 @@
           :class="{ active: index === active }"
           v-for="(item, index) in mychannels"
           :key="index"
+          @click="clickMyChannel(item, index)"
         >
           <van-icon
             class="icon"
@@ -87,9 +88,18 @@ export default {
         console.log('获取失败')
       }
     },
-    // 点击标签
+    // 点击标签添加
     addchannel(channel) {
       this.mychannels.push(channel)
+    },
+    clickMyChannel(item, index) {
+      console.log(item, index)
+      if (this.flag) {
+        // 编辑状态
+      } else {
+        // 非编辑状态
+        this.$emit('updataActive', index)
+      }
     }
   },
   computed: {
