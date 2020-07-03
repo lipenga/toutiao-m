@@ -47,3 +47,20 @@ export const getnewslist = function(params) {
     params
   })
 }
+// 批量修改用户频道列表（部分覆盖）
+export const editUserChannels = function(channel) {
+  return request({
+    method: 'PATCH',
+    url: '/app/v1_0/user/channels',
+    data: {
+      channels: [channel]
+    }
+  })
+}
+// 删除用户频道列表（部分覆盖）
+export const delUserChannels = function(channel) {
+  return request({
+    method: 'DELETE',
+    url: '/app/v1_0/user/channels/' + channel
+  })
+}

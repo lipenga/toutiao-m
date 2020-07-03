@@ -52,7 +52,9 @@
 </template>
 
 <script>
-import { getalllist } from '@/api/user.js'
+import { getalllist, editUserChannels, delUserChannels } from '@/api/user.js'
+import { mapState } from 'vuex'
+import { setItem } from '@/utils/storage.js'
 export default {
   name: 'channel-edit',
   props: ['mychannels', 'active'],
@@ -78,14 +80,38 @@ export default {
       }
     },
     // 点击标签添加
-    addchannel(channel) {
+    async addchannel(channel) {
       this.mychannels.push(channel)
+      // 数据持久化处理
+      if (this.user) {
+        // 已经登陆
+        try {
+          await editUserChannels({
+            id: channel.id,
+            seq: this.mychannels.length
+          })
+
+          //   this.mychannels.push(res)
+        } catch (err) {
+          this.$toast('保存失败', err)
+        }
+      } else {
+        // 未登录
+        setItem('TOUTIAO_CHANNELS', this.mychannels)
+      }
     },
     // 点击我的标签
-    clickMyChannel(item, index) {
+    async clickMyChannel(item, index) {
       console.log(item, index)
       if (this.flag) {
         // 编辑状态,点击标签删除。
+        // 登陆了的删除
+        if (this.user) {
+          await delUserChannels(item.id)
+        } else {
+          // 未登陆的删除
+          setItem('TOUTIAO_CHANNELS', this.mychannels)
+        }
         // 不能删除推荐标签
         if (this.fiexchannels.includes(item.id)) {
           return
@@ -102,6 +128,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['user']),
     //   定义剩下得推荐频道
     losechannels() {
       const channels = []
