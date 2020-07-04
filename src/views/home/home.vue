@@ -10,6 +10,7 @@
           round
           type="info"
           icon="search"
+          @click="toSearch"
         >
           搜索</van-button
         >
@@ -70,6 +71,10 @@ export default {
     this.loaduserlist()
   },
   methods: {
+    // 跳转到搜索页
+    toSearch() {
+      this.$router.push('/search')
+    },
     // 获取首页列表
     async loaduserlist() {
       let channels = []

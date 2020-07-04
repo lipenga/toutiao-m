@@ -64,3 +64,4 @@ export const delUserChannels = function(channel) {
     url: '/app/v1_0/user/channels/' + channel
   })
 }
+// 获取联想建 议 自动补全
