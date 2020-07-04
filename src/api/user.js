@@ -65,3 +65,11 @@ export const delUserChannels = function(channel) {
   })
 }
 // 获取联想建 议 自动补全
+
+export const getsuggess = function(q) {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/suggestion',
+    params: { q }
+  })
+}
