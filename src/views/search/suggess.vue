@@ -52,6 +52,7 @@ export default {
         this.suggesslist = data.data.options
       } catch (err) {}
     },
+    // 给样式使关键字高亮
     hightlight(item) {
       const hightlightstr = `<span class='active'>${this.searchvalue}</span>`
       const reg = new RegExp(this.searchvalue, 'gi')
