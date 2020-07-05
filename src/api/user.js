@@ -73,3 +73,12 @@ export const getsuggess = function(q) {
     params: { q }
   })
 }
+// 获取搜索结果
+
+export const getresults = function(q) {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/search',
+    params: { q }
+  })
+}

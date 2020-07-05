@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <form action="/">
+  <div class="search-container">
+    <form action="/" id="searchHead">
       <van-search
         v-model="searchText"
         show-action
@@ -9,10 +9,15 @@
         @cancel="onCancel"
         background="#308ffe"
       />
-      <result v-if="this.showResult"></result>
-      <suggess v-else-if="searchText" :searchvalue="searchText"> </suggess>
-      <history v-else></history>
     </form>
+    <result v-if="this.showResult" :searchvalue="searchText"></result>
+    <suggess
+      v-else-if="searchText"
+      :searchvalue="searchText"
+      @search="onSearch"
+    >
+    </suggess>
+    <history v-else></history>
   </div>
 </template>
 
@@ -32,8 +37,15 @@ export default {
   components: { suggess, history, result },
   methods: {
     //   点击回车搜索
-    onSearch() {
+    async onSearch(val) {
       this.showResult = true
+      console.log(val)
+      this.searchText = val
+      // try {
+      //   const { data } = await getresults(val)
+      //   console.log(data)
+      //   this.resultsList = data.data.results.title
+      // } catch (err) {}
     },
     onCancel() {
       this.$router.back()
@@ -42,5 +54,15 @@ export default {
 }
 </script>
 
-<style>
+<style lang="less" scoped>
+.search-container {
+  padding-top: 100px;
+}
+#searchHead {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+}
 </style>

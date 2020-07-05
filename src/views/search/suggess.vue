@@ -6,6 +6,7 @@
       icon="search"
       :key="i"
       v-for="(item, i) in suggesslist"
+      @click="$emit('search', item)"
     >
       <span slot="title" v-html="hightlight(item)"> </span>
     </van-cell>
@@ -14,6 +15,7 @@
 
 <script>
 import { getsuggess } from '@/api/user.js'
+
 import { debounce } from 'lodash'
 
 export default {
@@ -48,7 +50,7 @@ export default {
       //   发送请求触发联想，赋值渲染
       try {
         const { data } = await getsuggess(q)
-        console.log(data.data)
+        // console.log(data.data)
         this.suggesslist = data.data.options
       } catch (err) {}
     },

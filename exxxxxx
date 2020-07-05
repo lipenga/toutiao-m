@@ -56,3 +56,4 @@
       const reg = new RegExp(this.searchvalue, 'gi')
       return item.replace(reg, hightlightstr)
     }
+9.在搜索结果组件动态绑定输入的值，组件里props接收结果，1.接收到结果后发送请求，获取数据；2.将数据添加到列表中，再循环渲染。3，关闭加载load  4，判断是否还有数据，有则改变数据请求下一页数据，没有就finished设置为结束。
