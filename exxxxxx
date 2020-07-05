@@ -46,3 +46,13 @@
 3.在页面下插入三个组件。联想建议，历史记录，搜索结果。判断输入框有无内容，用if-else-if来显示不同的组件
 4.当搜索框变化时，显示联想建议。父组件搜索框绑定搜索值，并通过动态数据绑定传递给儿子组件，子组件props接收。并监听变化。
 5.数据变化时，发送请求，请求携带变化的数据，将响应回来的数据赋值给列表，并在模板里渲染列表项。
+6.防止每一次搜索按键都是一次请求。设计防抖，导入lodash,用debounce指定发送请求的间隔  handler: debounce(function(value) {
+        this.loadsuggess(value)
+      }, 1000)
+
+7.关键字高亮，将关键字用v-html绑定，触发转换颜色函数，给输入关键字加样式使其高亮，函数中用正则匹配关键字，再用高亮字替换显示的文本中的关键字
+8. hightlight(item) {
+      const hightlightstr = `<span class='active'>${this.searchvalue}</span>`
+      const reg = new RegExp(this.searchvalue, 'gi')
+      return item.replace(reg, hightlightstr)
+    }
