@@ -1,8 +1,20 @@
 // 封装axios模块
 import axios from 'axios'
+import JSONBig from 'json-bigint'
 import store from '@/store'
+
 const request = axios.create({
-  baseURL: 'http://ttapi.research.itcast.cn/'
+  baseURL: 'http://ttapi.research.itcast.cn/',
+  // 自定义后端返回的原始数据
+  transformResponse: [
+    function(data) {
+      try {
+        return JSONBig.parse(data)
+      } catch (err) {
+        return data
+      }
+    }
+  ]
 })
 // 请求拦截器
 // axios.interceptors.request.use(config => {

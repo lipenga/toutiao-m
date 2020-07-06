@@ -82,3 +82,10 @@ export const getresults = function(q) {
     params: { q }
   })
 }
+// 获取新闻文章详情
+export const getOneArticle = function(id) {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/articles/' + id
+  })
+}

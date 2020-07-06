@@ -1,5 +1,8 @@
 <template>
-  <van-cell class="article-item">
+  <van-cell
+    class="article-item"
+    :to="{ name: 'articles', params: { articleID: article.art_id } }"
+  >
     <div slot="title" class="title van-multi-ellipsis--l3">
       {{ article.title }}
     </div>
@@ -36,7 +39,7 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
+<style scoped lang="less">
 .article-item {
   .title {
     font-size: 32px;
