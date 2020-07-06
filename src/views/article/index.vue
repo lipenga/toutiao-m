@@ -11,23 +11,31 @@
 
     <div class="main-wrap">
       <!-- 加载中 -->
-      <div class="loading-wrap">
+      <div class="loading-wrap" v-if="loading">
         <van-loading color="#3296fa" vertical>加载中</van-loading>
       </div>
       <!-- /加载中 -->
 
       <!-- 加载完成-文章详情 -->
-      <div class="article-detail">
+      <div class="article-detail" v-else-if="article.title">
         <!-- 文章标题 -->
-        <h1 class="article-title"></h1>
+        <h1 class="article-title">
+          {{ article.title }}
+        </h1>
         <!-- /文章标题 -->
 
         <!-- 用户信息 -->
         <van-cell class="user-info" center :border="false">
-          <van-image class="avatar" slot="icon" round fit="cover" />
-          <div slot="title" class="user-name">1</div>
+          <van-image
+            class="avatar"
+            slot="icon"
+            round
+            fit="cover"
+            :src="article.aut_photo"
+          />
+          <div slot="title" class="user-name">{{ article.aut_name }}</div>
           <div slot="label" class="publish-date">
-            5555
+            {{ article.pubdate | relativeTime }}
           </div>
           <van-button
             class="follow-btn"
@@ -47,20 +55,24 @@
         <!-- /用户信息 -->
 
         <!-- 文章内容 -->
-        <div class="article-content markdown-body" ref="article-content"></div>
+        <div
+          class="article-content markdown-body"
+          ref="article-content"
+          v-html="article.content"
+        ></div>
         <van-divider>正文结束</van-divider>
       </div>
       <!-- /加载完成-文章详情 -->
 
       <!-- 加载失败：404 -->
-      <div class="error-wrap">
+      <div class="error-wrap" v-else-if="errStatus === 404">
         <van-icon name="failure" />
         <p class="text">该资源不存在或已删除！</p>
       </div>
       <!-- /加载失败：404 -->
 
       <!-- 加载失败：其它未知错误（例如网络原因或服务端异常） -->
-      <div class="error-wrap">
+      <div class="error-wrap" v-else>
         <van-icon name="failure" />
         <p class="text">内容加载失败！</p>
         <van-button class="retry-btn">点击重试</van-button>
@@ -84,10 +96,26 @@
 
 <script>
 import { getOneArticle } from '@/api/user.js'
+import { ImagePreview } from 'vant'
+ImagePreview({
+  images: [
+    'https://img.yzcdn.cn/vant/apple-1.jpg',
+    'https://img.yzcdn.cn/vant/apple-2.jpg'
+  ],
+  startPosition: 1,
+  onClose() {
+    // do something
+    console.log(666)
+  }
+})
 export default {
   name: 'ArticleIndex',
   data() {
-    return {}
+    return {
+      article: {},
+      loading: true,
+      errStatus: 0
+    }
   },
   props: {
     articleID: {
@@ -99,20 +127,47 @@ export default {
     this.loadArticle()
   },
   methods: {
+    // 获取文章信息
     async loadArticle() {
       try {
-        const res = await getOneArticle(this.articleID)
-        console.log(res)
+        const { data } = await getOneArticle(this.articleID)
+        // 数据驱动视图这件事儿不是立即的
+        this.article = data.data
+
+        // 初始化图片点击预览
+        setTimeout(() => {
+          this.previewImage()
+        }, 0)
       } catch (err) {
+        if (err.response && err.response.status === 404) {
+          this.errStatus = 404
+        }
         console.log('获取数据失败')
       }
+      this.loading = false
+    },
+    previewImage() {
+      // 得到所有的img节点
+      const articleContent = this.$refs['article-content']
+      const imgs = articleContent.querySelectorAll('img')
+      const images = []
+      imgs.forEach((img, index) => {
+        images.push(img.src)
+        img.onclick = () => {
+          ImagePreview({
+            images,
+            // 起始位置，从0开始
+            startPosition: index
+          })
+        }
+      })
     }
   }
 }
 </script>
 
 <style scoped lang="less">
-// @import './github-markdown.css';
+@import '~@/style/github-markdown.css';
 
 .article-container {
   .main-wrap {
