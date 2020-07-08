@@ -119,3 +119,18 @@ export const Nocollect = function(target) {
     url: `/app/v1_0/article/collections/${target}`
   })
 }
+// 点赞文章
+export const likeArt = function(target) {
+  return request({
+    method: 'post',
+    url: '/app/v1_0/article/likings',
+    data: { target }
+  })
+}
+// 取消点赞文章
+export const NolikeArt = function(target) {
+  return request({
+    method: 'delete',
+    url: `/app/v1_0/article/likings/${target}`
+  })
+}

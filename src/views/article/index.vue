@@ -68,7 +68,11 @@
             v-model="article.is_collected"
             :collectID="article.art_id"
           />
-          <like v-model="article.attitude" :collectID="article.art_id" />
+          <like
+            class="btn-item"
+            v-model="article.attitude"
+            :articleId="article.art_id"
+          />
           <van-icon name="share" color="#777777"></van-icon>
         </div>
       </div>

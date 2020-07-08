@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import {} from '@/api/user.js'
+import { NolikeArt, likeArt } from '@/api/user.js'
 
 export default {
   name: 'onlike',
@@ -21,33 +21,38 @@ export default {
     value: {
       type: Number,
       required: true
+    },
+    articleId: {
+      type: [String, Object, Number],
+      required: true
     }
   },
   methods: {
-    onlike() {
-      console.log(1)
+    async onlike() {
+      this.loading = true
+      try {
+        let status = -1
+
+        if (this.value === 1) {
+          // 已经点赞，取消点赞
+          await NolikeArt(this.articleId)
+        } else {
+          await likeArt(this.articleId)
+          status = 1
+        }
+        this.$emit('input', status)
+        this.$toast.success(status === 1 ? '点赞成功' : '取消点赞成功')
+      } catch (err) {
+        this.$toast.fail('操作失败，重试')
+      }
+      this.loading = false
     }
-    // async onCollect() {
-    //   this.loading = true
-    //   try {
-    //     if (!this.value) {
-    //       await collect(this.collectID)
-    //     } else {
-    //       await Nocollect(this.collectID)
-    //     }
-    //     this.$emit('input', !this.value)
-    //     this.$toast.success(!this.value ? '收藏成功' : '取消收藏成功')
-    //     this.loading = false
-    //   } catch (err) {
-    //     console.log(err)
-    //   }
-    // }
   }
 }
 </script>
 
 <style lang="less" scoped>
-/deep/.like {
+.liked {
   color: red;
 }
 </style>
