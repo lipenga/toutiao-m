@@ -38,19 +38,24 @@
             {{ article.pubdate | relativeTime }}
           </div>
           <van-button
+            @click="onFOLLOW"
+            class="follow-btn"
+            round
+            size="small"
+            v-if="this.article.is_followed"
+            >已关注</van-button
+          >
+          <van-button
+            v-else
             class="follow-btn"
             type="info"
             color="#3296fa"
             round
             size="small"
+            @click="onFOLLOW"
             icon="plus"
             >关注</van-button
           >
-          <!-- <van-button
-            class="follow-btn"
-            round
-            size="small"
-          >已关注</van-button> -->
         </van-cell>
         <!-- /用户信息 -->
 
@@ -95,19 +100,17 @@
 </template>
 
 <script>
-import { getOneArticle } from '@/api/user.js'
+import { getOneArticle, addFollow, delFollow } from '@/api/user.js'
 import { ImagePreview } from 'vant'
-ImagePreview({
-  images: [
-    'https://img.yzcdn.cn/vant/apple-1.jpg',
-    'https://img.yzcdn.cn/vant/apple-2.jpg'
-  ],
-  startPosition: 1,
-  onClose() {
-    // do something
-    console.log(666)
-  }
-})
+// 预览
+// ImagePreview({
+//   images: [],
+//   startPosition: 1,
+//   onClose() {
+//     // do something
+//     console.log(666)
+//   }
+// })
 export default {
   name: 'ArticleIndex',
   data() {
@@ -161,6 +164,24 @@ export default {
           })
         }
       })
+    },
+    async onFOLLOW() {
+      try {
+        if (this.article.is_followed) {
+          await delFollow(this.article.aut_id)
+          this.article.is_followed = false
+        } else {
+          await addFollow(this.article.aut_id)
+
+          this.article.is_followed = true
+        }
+      } catch (err) {
+        let message = '操作失败，重试'
+        if (err.response && err.response.status === 400) {
+          message = '不能关注自己'
+        }
+        this.$toast(message)
+      }
     }
   }
 }

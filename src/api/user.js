@@ -89,3 +89,18 @@ export const getOneArticle = function(id) {
     url: '/app/v1_0/articles/' + id
   })
 }
+// 关注
+export const addFollow = function(target) {
+  return request({
+    method: 'POST',
+    url: '/app/v1_0/user/followings',
+    data: { target }
+  })
+}
+// 取关
+export const delFollow = function(target) {
+  return request({
+    method: 'DELETE',
+    url: `/app/v1_0/user/followings/${target}`
+  })
+}
