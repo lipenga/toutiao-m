@@ -89,7 +89,7 @@ export const getOneArticle = function(id) {
     url: '/app/v1_0/articles/' + id
   })
 }
-// 关注
+// 关注用户
 export const addFollow = function(target) {
   return request({
     method: 'POST',
@@ -97,10 +97,25 @@ export const addFollow = function(target) {
     data: { target }
   })
 }
-// 取关
+// 取消关注用户
 export const delFollow = function(target) {
   return request({
     method: 'DELETE',
     url: `/app/v1_0/user/followings/${target}`
+  })
+}
+// 收藏文章
+export const collect = function(target) {
+  return request({
+    method: 'post',
+    url: '/app/v1_0/article/collections',
+    data: { target }
+  })
+}
+// 取消收藏文章
+export const Nocollect = function(target) {
+  return request({
+    method: 'delete',
+    url: `/app/v1_0/article/collections/${target}`
   })
 }
