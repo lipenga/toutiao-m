@@ -4,6 +4,7 @@
     :finished="finished"
     finished-text="没有更多了"
     @load="onLoad"
+    :immediate-check="false"
   >
     <Artitem
       v-for="(item, i) in list"
@@ -38,9 +39,17 @@ export default {
     list: {
       type: Array,
       default: () => []
+    },
+    type: {
+      type: String,
+      validator(value) {
+        return ['a', 'c'].includes(value)
+      },
+      default: 'a'
     }
   },
   created() {
+    this.loading = true
     this.onLoad()
   },
   methods: {
@@ -48,7 +57,7 @@ export default {
     async onLoad() {
       try {
         const { data } = await getArticle({
-          type: 'a',
+          type: this.type,
           source: this.source.toString(),
           offset: this.offset,
           limit: this.limit

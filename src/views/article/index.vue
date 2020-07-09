@@ -113,7 +113,7 @@
     <!-- /底部区域 -->
     <!-- 评论回复 -->
     <van-popup v-model="repshow" position="bottom" style="height:100%">
-      <replycomment />
+      <replycomment :comment="currentComment" @close="closePop" />
     </van-popup>
   </div>
 </template>
@@ -147,7 +147,8 @@ export default {
       commentCount: 0,
       popshow: false,
       repshow: false,
-      commentList: []
+      commentList: [],
+      currentComment: {}
     }
   },
   props: {
@@ -204,8 +205,11 @@ export default {
     // 点击回复弹出层onReplyClick
     onReplyClick(comment) {
       console.log(comment)
-
+      this.currentComment = comment
       this.repshow = true
+    },
+    closePop() {
+      this.repshow = false
     }
   }
 }
