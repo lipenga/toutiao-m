@@ -15,6 +15,7 @@
           liked: comment.is_liking
         }"
         :icon="comment.is_liking ? 'good-job' : 'good-job-o'"
+        :loading="commentLoading"
         @click="onCommentLike"
         >{{ comment.like_count || '赞' }}</van-button
       >
@@ -35,24 +36,9 @@
 </template>
 
 <script>
-export default {
-  name: 'ArticleItem',
-  components: {},
-  props: {
-    comment: {
-      type: Object,
-      required: true
-    }
-  },
-  data() {
-    return {}
-  },
-  computed: {},
-  watch: {},
-  created() {},
-  mounted() {},
-  methods: { onCommentLike() {} }
-}
+// import { addCommentLike, deleteCommentLike } from '@/api/comment'
+
+export default {}
 </script>
 
 <style scoped lang="less">
