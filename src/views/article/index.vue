@@ -59,11 +59,21 @@
         <!-- 文章评论 -->
         <ArticleComment
           :source="article.art_id"
+          :list="commentList"
           @getSuccess="commentCount = $event.total_count"
         />
         <!-- 底部区域 -->
         <div class="article-bottom">
-          <van-button class="comment-btn" type="default" round size="small"
+          <!-- 发布评论弹出层 -->
+          <van-popup v-model="popshow" position="bottom">
+            <commentpost :target="article.art_id" @successpop="onPopSuccess" />
+          </van-popup>
+          <van-button
+            class="comment-btn"
+            type="default"
+            round
+            size="small"
+            @click="popshow = true"
             >写评论</van-button
           >
           <van-icon name="comment-o" :info="commentCount" color="#777" />
@@ -110,6 +120,7 @@ import btn from '@/views/home/components/addfollow.vue'
 import collect from '@/views/home/components/collect.vue'
 import like from '@/views/home/components/likeArticle.vue'
 import ArticleComment from '@/views/article/ARTcomment.vue'
+import commentpost from '@/views/home/components/commentPost.vue'
 // 预览
 // ImagePreview({
 //   images: [],
@@ -121,13 +132,15 @@ import ArticleComment from '@/views/article/ARTcomment.vue'
 // })
 export default {
   name: 'ArticleIndex',
-  components: { btn, collect, like, ArticleComment },
+  components: { btn, collect, like, ArticleComment, commentpost },
   data() {
     return {
       article: {},
       loading: true,
       errStatus: 0,
-      commentCount: 0
+      commentCount: 0,
+      popshow: false,
+      commentList: []
     }
   },
   props: {
@@ -174,6 +187,12 @@ export default {
           })
         }
       })
+    },
+    onPopSuccess(data) {
+      // 将发布内容显示到列表顶部
+      this.commentList.unshift(data.new_obj)
+      // 关闭弹出层
+      this.popshow = false
     }
   }
 }

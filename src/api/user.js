@@ -158,3 +158,11 @@ export const NolikeComment = function(target) {
     url: `/app/v1_0/comment/likings/${target}`
   })
 }
+// 发布评论
+export const postComment = function(data) {
+  return request({
+    method: 'POST',
+    url: '/app/v1_0/comments',
+    data
+  })
+}

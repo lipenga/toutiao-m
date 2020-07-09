@@ -21,7 +21,7 @@ export default {
   name: 'CommentList',
   data() {
     return {
-      list: [],
+      // list: [],
       loading: false,
       finished: false,
       offset: null,
@@ -33,6 +33,10 @@ export default {
     source: {
       type: [Object, String, Number],
       required: true
+    },
+    list: {
+      type: Array,
+      default: () => []
     }
   },
   created() {
@@ -48,7 +52,7 @@ export default {
           offset: this.offset,
           limit: this.limit
         })
-        console.log(data)
+        // console.log(data)
         // 2 .列表赋值
         const { results } = data.data
         this.list.push(...results)
