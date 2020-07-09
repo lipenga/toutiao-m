@@ -134,3 +134,27 @@ export const NolikeArt = function(target) {
     url: `/app/v1_0/article/likings/${target}`
   })
 }
+// 获取文章评论列表
+export const getArticle = function(params) {
+  return request({
+    method: 'GET',
+    url: '/app/v1_0/comments',
+    params
+  })
+}
+
+// 点赞评论
+export const likeComment = function(target) {
+  return request({
+    method: 'post',
+    url: '/app/v1_0/comment/likings',
+    data: { target }
+  })
+}
+// 取消点赞评论
+export const NolikeComment = function(target) {
+  return request({
+    method: 'delete',
+    url: `/app/v1_0/comment/likings/${target}`
+  })
+}

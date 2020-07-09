@@ -56,12 +56,17 @@
           v-html="article.content"
         ></div>
         <van-divider>正文结束</van-divider>
+        <!-- 文章评论 -->
+        <ArticleComment
+          :source="article.art_id"
+          @getSuccess="commentCount = $event.total_count"
+        />
         <!-- 底部区域 -->
         <div class="article-bottom">
           <van-button class="comment-btn" type="default" round size="small"
             >写评论</van-button
           >
-          <van-icon name="comment-o" info="123" color="#777" />
+          <van-icon name="comment-o" :info="commentCount" color="#777" />
 
           <collect
             class="btn-item"
@@ -104,6 +109,7 @@ import { ImagePreview } from 'vant'
 import btn from '@/views/home/components/addfollow.vue'
 import collect from '@/views/home/components/collect.vue'
 import like from '@/views/home/components/likeArticle.vue'
+import ArticleComment from '@/views/article/ARTcomment.vue'
 // 预览
 // ImagePreview({
 //   images: [],
@@ -115,12 +121,13 @@ import like from '@/views/home/components/likeArticle.vue'
 // })
 export default {
   name: 'ArticleIndex',
-  components: { btn, collect, like },
+  components: { btn, collect, like, ArticleComment },
   data() {
     return {
       article: {},
       loading: true,
-      errStatus: 0
+      errStatus: 0,
+      commentCount: 0
     }
   },
   props: {
