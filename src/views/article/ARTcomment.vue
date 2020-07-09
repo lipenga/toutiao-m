@@ -5,12 +5,18 @@
     finished-text="没有更多了"
     @load="onLoad"
   >
-    <van-cell v-for="(item, i) in list" :key="i" :title="item.content" />
+    <Artitem
+      v-for="(item, i) in list"
+      :key="i"
+      :title="item.content"
+      :comment="item"
+    />
   </van-list>
 </template>
 
 <script>
 import { getArticle } from '@/api/user.js'
+import Artitem from './ARTitem.vue'
 export default {
   name: 'CommentList',
   data() {
@@ -22,7 +28,7 @@ export default {
       limit: 10
     }
   },
-
+  components: { Artitem },
   props: {
     source: {
       type: [Object, String, Number],
