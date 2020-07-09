@@ -10,6 +10,7 @@
       :key="i"
       :title="item.content"
       :comment="item"
+      @reply-click="$emit('reply-click', $event)"
     />
   </van-list>
 </template>

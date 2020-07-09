@@ -61,12 +61,13 @@
           :source="article.art_id"
           :list="commentList"
           @getSuccess="commentCount = $event.total_count"
+          @reply-click="onReplyClick"
         />
         <!-- 底部区域 -->
         <div class="article-bottom">
           <!-- 发布评论弹出层 -->
           <van-popup v-model="popshow" position="bottom">
-            <commentpost :target="article.art_id" @successpop="onPopSuccess" />
+            <commentpost :target="article.art_id" @successpost="onPopSuccess" />
           </van-popup>
           <van-button
             class="comment-btn"
@@ -110,6 +111,10 @@
     </div>
 
     <!-- /底部区域 -->
+    <!-- 评论回复 -->
+    <van-popup v-model="repshow" position="bottom" style="height:100%">
+      <replycomment />
+    </van-popup>
   </div>
 </template>
 
@@ -121,6 +126,7 @@ import collect from '@/views/home/components/collect.vue'
 import like from '@/views/home/components/likeArticle.vue'
 import ArticleComment from '@/views/article/ARTcomment.vue'
 import commentpost from '@/views/home/components/commentPost.vue'
+import replycomment from '@/views/article/replycomment.vue'
 // 预览
 // ImagePreview({
 //   images: [],
@@ -132,7 +138,7 @@ import commentpost from '@/views/home/components/commentPost.vue'
 // })
 export default {
   name: 'ArticleIndex',
-  components: { btn, collect, like, ArticleComment, commentpost },
+  components: { btn, collect, like, ArticleComment, commentpost, replycomment },
   data() {
     return {
       article: {},
@@ -140,6 +146,7 @@ export default {
       errStatus: 0,
       commentCount: 0,
       popshow: false,
+      repshow: false,
       commentList: []
     }
   },
@@ -193,6 +200,12 @@ export default {
       this.commentList.unshift(data.new_obj)
       // 关闭弹出层
       this.popshow = false
+    },
+    // 点击回复弹出层onReplyClick
+    onReplyClick(comment) {
+      console.log(comment)
+
+      this.repshow = true
     }
   }
 }

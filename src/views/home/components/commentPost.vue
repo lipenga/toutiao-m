@@ -39,19 +39,23 @@ export default {
   mounted() {},
   methods: {
     async addComment() {
+      this.$toast.loading({
+        message: '发布中',
+        forbidClick: true,
+        loadingType: 'spinner',
+        duration: 0
+      })
       try {
         const { data } = await postComment({
           target: this.target,
           content: this.content,
           art_id: null
         })
-        console.log(data)
-        this.$emit('successpost', data.data)
-        // 关闭弹出层
 
-        // 将发布内容显示到列表顶部
         // 清空文本框
         this.content = ''
+        this.$toast.success('发布成功')
+        this.$emit('successpost', data.data)
       } catch (err) {
         console.log(err)
         this.$toast.fail('发布失败')
