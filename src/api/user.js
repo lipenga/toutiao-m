@@ -166,3 +166,18 @@ export const postComment = function(data) {
     data
   })
 }
+// 获取用户个人资料
+export const getUser = function(id) {
+  return request({
+    method: 'get',
+    url: '/app/v1_0/user/profile'
+  })
+}
+// 更新用户个人资料
+export const UpdataUser = function(data) {
+  return request({
+    method: 'patch',
+    url: '/app/v1_0/user/profile',
+    data
+  })
+}

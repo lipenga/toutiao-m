@@ -9,7 +9,7 @@
         <div>
           <span class="username">{{ this.userinfo.name }}</span>
         </div>
-        <div id="editdiv">编辑资料</div>
+        <div id="editdiv" @click="edit">编辑资料</div>
       </div>
       <div class="data-list">
         <div>
@@ -97,6 +97,9 @@ export default {
       } catch (err) {
         this.$toast('获取数据失败，请稍后重试')
       }
+    },
+    edit() {
+      this.$router.push('/edit')
     }
   },
   computed: {
