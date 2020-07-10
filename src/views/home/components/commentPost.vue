@@ -25,6 +25,10 @@ export default {
     target: {
       type: [Number, String, Object],
       required: true
+    },
+    repId: {
+      type: [Number, String, Object],
+      default: null
     }
   },
   data() {
@@ -47,9 +51,9 @@ export default {
       })
       try {
         const { data } = await postComment({
-          target: this.target,
+          target: this.target.toString(),
           content: this.content,
-          art_id: null
+          art_id: this.repId ? this.repId.toString() : null
         })
 
         // 清空文本框

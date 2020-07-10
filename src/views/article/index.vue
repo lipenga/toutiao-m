@@ -112,8 +112,17 @@
 
     <!-- /底部区域 -->
     <!-- 评论回复 -->
-    <van-popup v-model="repshow" position="bottom" style="height:100%">
-      <replycomment :comment="currentComment" @close="closePop" />
+    <van-popup
+      v-if="repshow"
+      v-model="repshow"
+      position="bottom"
+      style="height:100%"
+    >
+      <replycomment
+        :comment="currentComment"
+        @close="closePop"
+        :repId="article.art_id"
+      />
     </van-popup>
   </div>
 </template>
