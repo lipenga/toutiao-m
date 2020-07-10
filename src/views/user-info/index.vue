@@ -21,11 +21,20 @@
       title="性别"
       :value="user.gender === 0 ? '男' : '女'"
       is-link=""
+      @click="showsexpop = true"
     />
     <van-cell title="生日" :value="user.birthday" is-link="" />
     <!-- 编辑昵称弹出层 -->
     <van-popup v-model="shownamepop" position="top">
       <popname @close="shownamepop = false" :username="user.name" />
+    </van-popup>
+    <!-- 编辑性别 -->
+    <van-popup v-model="showsexpop" position="top">
+      <popsex
+        v-if="showsexpop"
+        @close="showsexpop = false"
+        v-model="user.gender"
+      />
     </van-popup>
   </div>
 </template>
@@ -33,16 +42,18 @@
 <script>
 import { getUser } from '@/api/user.js'
 import popname from './Popname.vue'
+import popsex from './popsex.vue'
 export default {
   name: 'editUserInfo',
 
   data() {
     return {
       user: {},
-      shownamepop: false
+      shownamepop: false,
+      showsexpop: false
     }
   },
-  components: { popname },
+  components: { popname, popsex },
   created() {
     this.loaduserinfo()
   },
