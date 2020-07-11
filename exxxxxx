@@ -86,4 +86,10 @@
 6.在input设置change事件，发生改变，拿到改变的图片的信息 。  const file = this.$refs.xxx.files[0]
       // 基于文件对象获取blob数据
       const data = window.URL.createObjectURL(file)
-7.选定图片后，显示弹出框，
+7.选定图片后，显示弹出框,弹出框的内容用组件显示。组件里img的src属性为父组件传递过来的 this.imgdata = window.URL.createObjectURL(file)
+8.图片裁切，下载cropperjs依赖并导入。import 'cropperjs/dist/cropper.css'；import Cropper from 'cropperjs'，在mounted里配置选项。此时裁切框已经出现。
+9.点击确定时，基于服务器的裁切使用getData方法获取裁切参数：console.log(this.cropper.getData()) 
+10： 纯客户端的裁切使用getCroppedCanvas获取裁切的文件对象：  this.cropper.getCroppedCanvas().toBlob(blob => {
+        console.log(blob)
+      })
+11.

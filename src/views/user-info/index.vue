@@ -53,7 +53,12 @@
     </van-popup>
     <!-- 图片头像 -->
     <van-popup v-model="showPhoto" position="top">
-      <popimg v-model="imgdata" @close="showPhoto = false" />
+      <popimg
+        v-if="showPhoto"
+        v-model="imgdata"
+        @close="showPhoto = false"
+        @upimg="user.photo = $event"
+      />
     </van-popup>
   </div>
 </template>

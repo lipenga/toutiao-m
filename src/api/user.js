@@ -181,3 +181,11 @@ export const UpdataUser = function(data) {
     data
   })
 }
+// 更新用户照片资料
+export const UpdataUserPhoto = function(data) {
+  return request({
+    method: 'patch',
+    url: '/app/v1_0/user/photo',
+    data
+  })
+}
