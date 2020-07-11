@@ -7,8 +7,10 @@
       left-arrow
       @click-left="$router.back()"
     />
+    <!-- / 导航栏 -->
+    <input type="file" hidden ref="files" @change="onFileChange" />
     <!-- 个人信息 -->
-    <van-cell title="头像" is-link>
+    <van-cell title="头像" is-link @click="$refs.files.click()">
       <van-image class="avatar" fit="cover" round :src="user.photo" />
     </van-cell>
     <van-cell
@@ -23,7 +25,12 @@
       is-link=""
       @click="showsexpop = true"
     />
-    <van-cell title="生日" :value="user.birthday" is-link="" />
+    <van-cell
+      title="生日"
+      :value="user.birthday"
+      is-link=""
+      @click="showbirthday = true"
+    />
     <!-- 编辑昵称弹出层 -->
     <van-popup v-model="shownamepop" position="top">
       <popname @close="shownamepop = false" :username="user.name" />
@@ -36,6 +43,18 @@
         v-model="user.gender"
       />
     </van-popup>
+    <!-- 编辑生日 -->
+    <van-popup v-model="showbirthday" position="top">
+      <popbirthday
+        v-model="user.birthday"
+        @close="showbirthday = false"
+        v-if="showbirthday"
+      />
+    </van-popup>
+    <!-- 图片头像 -->
+    <van-popup v-model="showPhoto" position="top">
+      <popimg v-model="imgdata" @close="showPhoto = false" />
+    </van-popup>
   </div>
 </template>
 
@@ -43,6 +62,8 @@
 import { getUser } from '@/api/user.js'
 import popname from './Popname.vue'
 import popsex from './popsex.vue'
+import popbirthday from './popbirthday.vue'
+import popimg from './popimg.vue'
 export default {
   name: 'editUserInfo',
 
@@ -50,10 +71,13 @@ export default {
     return {
       user: {},
       shownamepop: false,
-      showsexpop: false
+      showsexpop: false,
+      showbirthday: false,
+      showPhoto: false,
+      imgdata: ''
     }
   },
-  components: { popname, popsex },
+  components: { popname, popsex, popbirthday, popimg },
   created() {
     this.loaduserinfo()
   },
@@ -62,11 +86,19 @@ export default {
       const { data } = await getUser()
 
       this.user = data.data
-      console.log(this.user)
     },
     // 展示昵称
     popname() {
       this.shownamepop = true
+    },
+    onFileChange() {
+      // 获取文件对象
+      const file = this.$refs.files.files[0]
+      // 基于文件对象获取blob数据
+      this.imgdata = window.URL.createObjectURL(file)
+
+      this.showPhoto = true
+      this.$refs.files.value = ''
     }
   }
 }
